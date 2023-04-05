@@ -1,5 +1,5 @@
 # Volunteer App
-
+If using Windows use WSL.
 ## Initial Setup
 
 ### Python
