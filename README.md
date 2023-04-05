@@ -1,10 +1,10 @@
 # Volunteer App
 
-## Initial
+## Initial Setup
 
 ### Python
 
-1. Make sure the latest version of Python/pip is installed and up to date.
+1. Make sure the latest version of Python/pip is installed. I think I have 3.11.something.
 2. Navigate to the `api` folder.
 3. Create a new virtual environment using `python -m venv env`
 4. Activate the virtual environment using `source env/bin/activate`
@@ -16,6 +16,10 @@
 2. Run `npm install -g @vue/cli` to install the Vue command line tools.
 3. Navigate to the `ui` folder.
 4. Run `npm install` to install all dependencies.
+
+### Database
+
+1. Inside the `db` directory, make a folder called `data`. This will hold the data inside of the database.
 
 ## Running the App
 
