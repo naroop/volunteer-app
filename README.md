@@ -25,14 +25,16 @@
 4. In the second terminal window, navigate to the `frontend` folder.
 5. Run `npm run serve` to start the Vue dev server.
 
-API: http://localhost:8000
+View UI:
+http://localhost:8080
 
-UI: http://localhost:8080
+Only one API endpoint right now:
+http://localhost:8000/helloworld
 
-## Running the Docker Image
+## Running the Docker Container
+I didn't test if this was actually a problem but I would make sure both dev servers are closed before building the image and running the container.
 
 1. Run `docker-compose up --build`
 
-API: http://localhost:8000
-
-UI: http://localhost:8001
+View UI:
+http://localhost:8001
