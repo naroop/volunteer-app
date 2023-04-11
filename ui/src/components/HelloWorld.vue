@@ -3,6 +3,7 @@
 </template>
 
 <script setup>
+import { baseUrl } from "/src/main.js";
 import { onMounted, reactive, defineComponent } from "vue";
 const axios = require("axios");
 const state = reactive({ message: "" });
