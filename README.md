@@ -38,6 +38,8 @@ If using Windows use WSL. The Node stuff works on Windows but there are some iss
 ## Running the Docker Container
 I didn't test if this was actually a problem but I would make sure both dev servers are closed before building the image and running the container.
 
+The docker container will only work on the EC2 instance.
+
 1. In the root of the project, run `docker-compose up --build`
 
 > View UI:  
