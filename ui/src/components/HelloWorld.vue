@@ -9,7 +9,7 @@ const state = reactive({ message: "" });
 
 onMounted(async () => {
   axios
-    .get("http://127.0.0.1:8000/helloworld")
+    .get(baseUrl + "helloworld")
     .then((response) => (state.message = response.data));
 });
 
