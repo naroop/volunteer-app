@@ -1,5 +1,5 @@
 # Volunteer App
-
+If using Windows use WSL. The Node stuff works on Windows but there are some issues with Python/Flask's dependencies and Windows but WSL works great.
 ## Initial Setup
 
 ### Python
