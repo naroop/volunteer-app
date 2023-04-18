@@ -9,9 +9,7 @@ const axios = require("axios");
 const state = reactive({ message: "" });
 
 onMounted(async () => {
-  axios
-    .get(baseUrl + "helloworld")
-    .then((response) => (state.message = response.data));
+  axios.get(baseUrl + "helloworld").then((response) => (state.message = response.data));
 });
 
 defineComponent({
