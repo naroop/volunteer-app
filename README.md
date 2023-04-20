@@ -44,3 +44,7 @@ The docker container will only work on the EC2 instance.
 
 > View UI:  
 > http://localhost:8001
+
+## Amazon Database Info
+username: ducksroot
+password: duckspassword
