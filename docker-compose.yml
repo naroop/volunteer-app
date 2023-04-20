@@ -10,7 +10,7 @@ services:
     expose:
       - 9000
     env_file:
-      - .env
+      - ./api/.env
     environment:
       - FLASK_ENVI=prod
 
