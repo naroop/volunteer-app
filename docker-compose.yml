@@ -9,6 +9,10 @@ services:
       - ./api/:/app
     expose:
       - 9000
+    env_file:
+      - .env
+    environment:
+      - FLASK_ENVI=prod
 
   ui:
     build: ./ui
