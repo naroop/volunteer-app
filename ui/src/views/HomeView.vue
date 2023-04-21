@@ -1,18 +1,9 @@
 <template>
-  <div class="home">
-    <img class="mx-auto" alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld />
+  <div class="flex h-screen items-center justify-center">
+    <LoginComponent />
   </div>
 </template>
 
-<script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
-
-export default {
-  name: "HomeView",
-  components: {
-    HelloWorld,
-  },
-};
+<script setup>
+import LoginComponent from "@/components/LoginComponent.vue";
 </script>
