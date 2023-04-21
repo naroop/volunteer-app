@@ -11,14 +11,12 @@
       <label class="label">
         <span class="label-text">Password</span>
       </label>
-      <input type="text" placeholder="password" class="input input-bordered" v-model="password" />
+      <input type="password" placeholder="•••••••••" class="input input-bordered input-" v-model="password" />
     </div>
-    <div class="flex">
-      <button class="btn btn-primary mt-4" @click="submitLoginForm">Sign In</button>
+    <div class="flex items-center mt-4 justify-between">
+      <button class="btn btn-primary" @click="submitLoginForm">Sign In</button>
+      <a class="mr-4 link link-hover" @click.prevent="$router.push('/createAccount')">Create an Account</a>
     </div>
-    <p class="mt-4">
-      {{ message }}
-    </p>
   </form>
 </template>
 
@@ -27,18 +25,18 @@ import { baseUrl } from "/src/main.js";
 import { ref } from "vue";
 import axios from "axios";
 import bcrypt from "bcryptjs";
+import store from "@/store/index";
+import router from "@/router/index";
 
 const email = ref("sgoggins@mail.com");
 const password = ref("securepasswordforprof");
-const message = ref("");
 
 function submitLoginForm() {
   axios.post(baseUrl + "login", { email: email.value }).then((response) => {
     const hashedPassword = bcrypt.hashSync(password.value, response.data.salt);
     if (hashedPassword == response.data.password) {
-      message.value = "Password correct.";
-    } else {
-      message.value = "Password incorrect.";
+      store.commit("login");
+      router.push("/");
     }
   });
 }

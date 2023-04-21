@@ -1,9 +1,5 @@
 <template>
   <div class="flex h-screen items-center justify-center">
-    <LoginComponent />
+    <p>You are home.</p>
   </div>
 </template>
-
-<script setup>
-import LoginComponent from "@/components/LoginComponent.vue";
-</script>
