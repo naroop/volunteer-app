@@ -1,35 +1,32 @@
 <template>
-
-<!-- Temporarily commented --
+  <!-- Temporarily commented --
   <form class="w-full max-w-xs bg-base-200 p-4 shadow-md rounded" @submit.prevent>
     <h3 class="text-2xl">Create Account</h3>
 -->
-  <form action="/action_page.php" method="post">
+  <form @submit.prevent>
     <div class="container">
+      <label for="email" style="font-size: 20px"><b>Email Address</b></label>
+      <input type="text" placeholder="Enter email address:" name="email" v-model="emailAddress" required />
+
+      <label for="psw" style="font-size: 20px"><b>Password</b></label>
+      <input type="password" placeholder="Enter password:" name="psw" v-model="password" required />
+
       <label for="fname" style="font-size: 20px"><b>First Name</b></label>
-      <input type="text" placeholder="Enter first name:" name="fname" required />
+      <input type="text" placeholder="Enter first name:" name="fname" v-model="firstName" required />
 
       <label for="lname" style="font-size: 20px"><b>Last Name</b></label>
-      <input type="text" placeholder="Enter last name:" name="lname" required />
-
-      <label for="email" style="font-size: 20px"><b>Email Address</b></label>
-      <input type="text" placeholder="Enter email address:" name="email" required />
+      <input type="text" placeholder="Enter last name:" name="lname" v-model="lastName" required />
 
       <label for="cell" style="font-size: 20px"><b>Phone Number</b></label>
-      <input type="text" placeholder="Enter phone number:" name="cell" required />
+      <input type="text" placeholder="Enter phone number:" name="cell" v-model="cellPhone" required />
 
       <label for="hours" style="font-size: 20px"><b>Hours available to work</b></label>
-      <input type="text" placeholder="Enter hours:" name="hours" required />
+      <input type="text" placeholder="Enter hours:" name="hours" v-model="hoursPerMonth" required />
 
       <label for="address" style="font-size: 20px"><b>Address</b></label>
-      <input type="text" placeholder="Enter address:" name="address" required />
+      <input type="text" placeholder="Enter address:" name="address" v-model="address" required />
 
-      <!-- Password block
-      <label for="psw" style="font-size:20px"><b>Password</b></label>
-      <input type="password" placeholder="Enter password:" name="psw" required>
-      -->
-
-      <button type="submit">Login</button>
+      <button @click="submitCreateAccount">Create Account</button>
     </div>
 
     <div class="container">
@@ -40,22 +37,53 @@
 
 <script setup>
 import { baseUrl } from "/src/main.js";
-import { onMounted, reactive, defineComponent } from "vue";
-const axios = require("axios");
-const state = reactive({ message: "" });
+import { ref } from "vue";
+import axios from "axios";
+import bcrypt from "bcryptjs";
+import store from "@/store/index";
+import router from "@/router/index";
 
-onMounted(async () => {
-  axios.get(baseUrl + "helloworld").then((response) => (state.message = response.data));
-});
+const emailAddress = ref("");
+const password = ref("");
+const firstName = ref("");
+const lastName = ref("");
+const cellPhone = ref("");
+const hoursPerMonth = ref("");
+const address = ref("");
 
-defineComponent({
-  name: "HelloWorld",
-  setup() {
-    return {
-      message: state.message,
-    };
-  },
-});
+function submitCreateAccount() {
+  const passwordInfo = encryptPassword();
+  axios
+    .post(baseUrl + "createAccount", {
+      emailAddress: emailAddress.value,
+      firstName: firstName.value,
+      lastName: lastName.value,
+      cellPhone: cellPhone.value,
+      hoursPerMonth: hoursPerMonth.value,
+      address: address.value,
+      passwordInfo,
+    })
+    .then((response) => {
+      console.log(response);
+      if (response.data.status == "OK") {
+        store.commit("login");
+        router.push("/");
+      } else {
+        console.log("Something went wrong");
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+function encryptPassword() {
+  const saltRounds = Math.floor(Math.random() * 10) + 1; // generate a random number of salt rounds between 1 and 10
+  const salt = bcrypt.genSaltSync(saltRounds); // generate a salt using the specified number of rounds
+  const hash = bcrypt.hashSync(password.value, salt); // hash the password using the generated salt
+
+  return { password: hash, salt: salt };
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

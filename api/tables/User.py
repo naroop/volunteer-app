@@ -10,12 +10,12 @@ class User(Base):
 
     emailAddress = Column(String(30), primary_key=True)
     password = Column(String(72))
-    salt = Column(Integer)
+    salt = Column(String(30))
 
     # Converts the User object to a dictionary
     def asDict(self) -> dict:
         userDict = {
-            "emailAddres": self.emailAddress,
+            "emailAddress": self.emailAddress,
             "password": self.password,
             "salt": self.salt
         }

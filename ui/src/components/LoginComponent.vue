@@ -28,8 +28,8 @@ import bcrypt from "bcryptjs";
 import store from "@/store/index";
 import router from "@/router/index";
 
-const email = ref("sgoggins@mail.com");
-const password = ref("securepasswordforprof");
+const email = ref("");
+const password = ref("");
 
 function submitLoginForm() {
   axios.post(baseUrl + "login", { email: email.value }).then((response) => {

@@ -3,7 +3,9 @@ from flask_cors import CORS
 from sqlalchemy import create_engine
 from sqlalchemy.pool import QueuePool
 from sqlalchemy.orm import sessionmaker, scoped_session
+from sqlalchemy.exc import IntegrityError
 from tables.User import User
+from tables.UserDetails import UserDetails
 import os
 from dotenv import load_dotenv
 
@@ -56,6 +58,30 @@ def login():
         results = session.query(User).filter_by(emailAddress=data['email']).first()
         session.close()
         return jsonify({"password": results.password, "salt": results.salt})
+
+
+@app.route('/createAccount', methods=['POST'])
+def createAccount():
+    if request.method == 'POST':
+        session = Session()
+        data = request.get_json()
+        user = User(emailAddress=data['emailAddress'], password=data['passwordInfo']["password"], salt=data["passwordInfo"]["salt"])
+        userDetails = UserDetails(emailAddress=data["emailAddress"], firstName=data["firstName"], lastName=data["lastName"],
+                                  cellPhone=data["cellPhone"], hoursPerMonth=data["hoursPerMonth"], address=data["address"])
+        session.add(user)
+        session.add(userDetails)
+        try:
+            session.commit()
+            session.close()
+            return jsonify({"status": "OK"})
+        except IntegrityError:
+            session.rollback()
+            session.close()
+            return jsonify({"status": "ERROR", "message": "An account already exists with this email."})
+        except Exception:
+            session.rollback()
+            session.close()
+            return jsonify({"status": "ERROR", "message": "An error occurred creating your account."})
 
 
 if __name__ == '__main__':

@@ -2,18 +2,18 @@ USE loginTest;
 DROP TABLE IF EXISTS UserDetails;
 DROP TABLE IF EXISTS Users;
 CREATE TABLE Users (
-    EmailAddress VARCHAR(30) PRIMARY KEY,
-    Password VARCHAR(72),
-    Salt VARCHAR(30)
+    emailAddress VARCHAR(30) PRIMARY KEY,
+    password VARCHAR(72),
+    salt VARCHAR(30)
 );
 CREATE TABLE UserDetails (
-    EmailAddress VARCHAR(30) PRIMARY KEY,
-    FirstName VARCHAR(30),
-    LastName VARCHAR(30),
-    Cellphone VARCHAR(10),
-    HoursPerMonth INT,
-    Address VARCHAR(256),
-    FOREIGN KEY (EmailAddress) REFERENCES Users(EmailAddress)
+    firstName VARCHAR(30),
+    lastName VARCHAR(30),
+    emailAddress VARCHAR(30) PRIMARY KEY,
+    cellPhone VARCHAR(10),
+    hoursPerMonth INT,
+    address VARCHAR(256),
+    FOREIGN KEY (emailAddress) REFERENCES Users(emailAddress)
 );
 INSERT INTO Users(EmailAddress, Password, Salt)
 VALUES(
@@ -22,12 +22,12 @@ VALUES(
         "$2b$04$yTg/XICu.Gk.Vd7VKBhKrO"
     );
 INSERT INTO UserDetails(
-        EmailAddress,
-        FirstName,
-        LastName,
-        Cellphone,
-        HoursPerMonth,
-        Address
+        emailAddress,
+        firstName,
+        lastName,
+        cellPhone,
+        hoursPerMonth,
+        address
     )
 VALUES(
         "sgoggins@mail.com",
