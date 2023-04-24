@@ -33,15 +33,8 @@ else:
 Session = scoped_session(sessionmaker(bind=engine))
 
 
-@app.route('/helloworld')
-def hello_world():
-    data = "Hello from Flask!"
-    response = jsonify(data)
-    return response
-
-
 @app.get('/getUsers')
-def get_users():
+def getUsers():
     session = Session()
     # Query the database for all users, results is a list of User objects
     results = session.query(User).all()
@@ -49,16 +42,26 @@ def get_users():
     # Return a new list containing each user object in result converted to a dictionary, and then jsonified
     return jsonify([user.asDict() for user in results])
 
+@app.get('/getUserDetails/<string:emailAddress>')
+def getUserDetailsByEmail(emailAddress):
+    session = Session()
+    result = session.query(UserDetails).filter_by(emailAddress=emailAddress).first()
+    session.close()
+    if result:
+        return jsonify({"error": False, "userDetails": result.asDict()})
+    else:
+        return jsonify({"error": True, "message": "An error occurred trying to find your account."})
+
 
 @app.route('/login', methods=['POST'])
 def login():
     if request.method == 'POST':
         session = Session()
         data = request.get_json()
-        results = session.query(User).filter_by(emailAddress=data['emailAddress']).first()
+        result = session.query(User).filter_by(emailAddress=data['emailAddress']).first()
         session.close()
-        if results:
-            return jsonify({"password": results.password, "salt": results.salt})
+        if result:
+            return jsonify({"password": result.password, "salt": result.salt})
         else:
             return jsonify({"error": True, "message": "No account was found with that email address."})
 
