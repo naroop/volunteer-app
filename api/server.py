@@ -88,5 +88,26 @@ def createAccount():
             return jsonify({"error": True, "message": "An error occurred creating your account."})
 
 
+@app.route("/updateAccount", methods=['PATCH'])
+def edit():
+    if request.method == 'PATCH':
+        try:
+            session = Session()
+            data = request.get_json()
+            userInfo = session.query(UserDetails).filter_by(emailAddress=data['emailAddress']).first()
+            for key, value in data.items():
+                if (key == 'emailAddress'):
+                    continue
+                setattr(userInfo, key, value)
+            session.commit()
+            session.close()
+            return jsonify({"error": False})
+        except Exception as e:
+            print(e)
+            session.rollback()
+            session.close()
+            return jsonify({"error": True, "message": "An error occurred updating your account."})
+
+
 if __name__ == '__main__':
     app.run(debug=True, port=8000)
