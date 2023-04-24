@@ -13,7 +13,7 @@ load_dotenv()
 
 app = Flask(__name__)
 
-CORS(app)
+CORS(app, origins='http://localhost:8080')
 
 if (os.environ.get("FLASK_ENVI") == "prod"):
     engine = create_engine(os.environ.get("DATABASE_URL") + "prod",
@@ -55,33 +55,37 @@ def login():
     if request.method == 'POST':
         session = Session()
         data = request.get_json()
-        results = session.query(User).filter_by(emailAddress=data['email']).first()
+        results = session.query(User).filter_by(emailAddress=data['emailAddress']).first()
         session.close()
-        return jsonify({"password": results.password, "salt": results.salt})
+        if results:
+            return jsonify({"password": results.password, "salt": results.salt})
+        else:
+            return jsonify({"error": True, "message": "No account was found with that email address."})
 
 
 @app.route('/createAccount', methods=['POST'])
 def createAccount():
     if request.method == 'POST':
-        session = Session()
-        data = request.get_json()
-        user = User(emailAddress=data['emailAddress'], password=data['passwordInfo']["password"], salt=data["passwordInfo"]["salt"])
-        userDetails = UserDetails(emailAddress=data["emailAddress"], firstName=data["firstName"], lastName=data["lastName"],
-                                  cellPhone=data["cellPhone"], hoursPerMonth=data["hoursPerMonth"], address=data["address"])
-        session.add(user)
-        session.add(userDetails)
         try:
+            session = Session()
+            data = request.get_json()
+            user = User(emailAddress=data['emailAddress'], password=data['passwordInfo']["password"], salt=data["passwordInfo"]["salt"])
+            userDetails = UserDetails(emailAddress=data["emailAddress"], firstName=data["firstName"], lastName=data["lastName"],
+                                      cellPhone=data["cellPhone"], hoursPerMonth=data["hoursPerMonth"], address=data["address"])
+            session.add(user)
+            session.add(userDetails)
             session.commit()
             session.close()
-            return jsonify({"status": "OK"})
+            return jsonify({"error": False})
         except IntegrityError:
             session.rollback()
             session.close()
-            return jsonify({"status": "ERROR", "message": "An account already exists with this email."})
-        except Exception:
+            return jsonify({"error": True, "message": "An account already exists with the given email address."})
+        except Exception as e:
+            print(type(e), e)
             session.rollback()
             session.close()
-            return jsonify({"status": "ERROR", "message": "An error occurred creating your account."})
+            return jsonify({"error": True, "message": "An error occurred creating your account."})
 
 
 if __name__ == '__main__':

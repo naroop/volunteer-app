@@ -1,75 +1,209 @@
 <template>
-  <!-- Temporarily commented --
-  <form class="w-full max-w-xs bg-base-200 p-4 shadow-md rounded" @submit.prevent>
-    <h3 class="text-2xl">Create Account</h3>
--->
-  <form @submit.prevent>
-    <div class="container">
-      <label for="email" style="font-size: 20px"><b>Email Address</b></label>
-      <input type="text" placeholder="Enter email address:" name="email" v-model="emailAddress" required />
+  <form class="w-full max-w-lg bg-base-300 p-4 shadow-lg rounded border-accent" @submit.prevent>
+    <h3 class="text-2xl">Create an Account</h3>
 
-      <label for="psw" style="font-size: 20px"><b>Password</b></label>
-      <input type="password" placeholder="Enter password:" name="psw" v-model="password" required />
-
-      <label for="fname" style="font-size: 20px"><b>First Name</b></label>
-      <input type="text" placeholder="Enter first name:" name="fname" v-model="firstName" required />
-
-      <label for="lname" style="font-size: 20px"><b>Last Name</b></label>
-      <input type="text" placeholder="Enter last name:" name="lname" v-model="lastName" required />
-
-      <label for="cell" style="font-size: 20px"><b>Phone Number</b></label>
-      <input type="text" placeholder="Enter phone number:" name="cell" v-model="cellPhone" required />
-
-      <label for="hours" style="font-size: 20px"><b>Hours available to work</b></label>
-      <input type="text" placeholder="Enter hours:" name="hours" v-model="hoursPerMonth" required />
-
-      <label for="address" style="font-size: 20px"><b>Address</b></label>
-      <input type="text" placeholder="Enter address:" name="address" v-model="address" required />
-
-      <button @click="submitCreateAccount">Create Account</button>
+    <div :class="['form-control']">
+      <label class="label">
+        <span :class="['label-text', form.emailAddress.hasError ? 'text-error' : '']">Email Address</span>
+      </label>
+      <input
+        type="text"
+        required
+        :class="['input', 'input-bordered', form.emailAddress.hasError ? 'input-error' : '']"
+        v-model="form.emailAddress.data"
+      />
+      <label class="label">
+        <span :class="['label-text-alt', form.emailAddress.hasError ? 'text-error' : '']">{{ form.emailAddress.label }}</span>
+      </label>
     </div>
 
-    <div class="container">
-      <img src="@/assets/ducksLogo.svg.png" alt="Avatar" class="avatar" />
+    <div :class="['form-control']">
+      <label class="label">
+        <span :class="['label-text', form.password.hasError ? 'text-error' : '']">Password</span>
+      </label>
+      <input
+        type="password"
+        required
+        :class="['input', 'input-bordered', form.password.hasError ? 'input-error' : '']"
+        v-model="form.password.data"
+      />
+      <label class="label">
+        <span :class="['label-text-alt', form.password.hasError ? 'text-error' : '']">{{ form.password.label }}</span>
+      </label>
     </div>
+
+    <div class="divider">Details</div>
+
+    <div class="flex justify-evenly">
+      <div :class="['form-control']">
+        <label class="label">
+          <span :class="['label-text', form.firstName.hasError ? 'text-error' : '']">First Name</span>
+        </label>
+        <input
+          type="text"
+          required
+          :class="['input', 'input-bordered', form.firstName.hasError ? 'input-error' : '']"
+          v-model="form.firstName.data"
+        />
+        <label class="label">
+          <span :class="['label-text-alt', form.firstName.hasError ? 'text-error' : '']">{{ form.firstName.label }}</span>
+        </label>
+      </div>
+
+      <div class="form-control">
+        <label class="label">
+          <span :class="['label-text', form.lastName.hasError ? 'text-error' : '']">Last Name</span>
+        </label>
+        <input type="text" required :class="['input', 'input-bordered', form.lastName.hasError ? 'input-error' : '']" v-model="form.lastName.data" />
+        <label class="label">
+          <span :class="['label-text-alt', form.lastName.hasError ? 'text-error' : '']">{{ form.lastName.label }}</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="flex justify-evenly">
+      <div :class="['form-control']">
+        <label class="label">
+          <span :class="['label-text', form.cellPhone.hasError ? 'text-error' : '']">Phone</span>
+        </label>
+        <input
+          type="text"
+          required
+          :class="['input', 'input-bordered', form.cellPhone.hasError ? 'input-error' : '']"
+          v-model="form.cellPhone.data"
+        />
+        <label class="label">
+          <span :class="['label-text-alt', form.cellPhone.hasError ? 'text-error' : '']">{{ form.cellPhone.label }}</span>
+        </label>
+      </div>
+
+      <div class="form-control">
+        <label class="label">
+          <span :class="['label-text', form.hoursPerMonth.hasError ? 'text-error' : '']">Hours Available per Month</span>
+        </label>
+        <input
+          type="number"
+          :class="['input', 'input-bordered', form.hoursPerMonth.hasError ? 'input-error' : '']"
+          required
+          v-model="form.hoursPerMonth.data"
+          @input="if (form.hoursPerMonth.data < 0) form.hoursPerMonth.data = 0;"
+        />
+        <label class="label">
+          <span :class="['label-text-alt', form.hoursPerMonth.hasError ? 'text-error' : '']">{{ form.hoursPerMonth.label }}</span>
+        </label>
+      </div>
+    </div>
+
+    <div :class="['form-control']">
+      <label class="label">
+        <span :class="['label-text', form.address.hasError ? 'text-error' : '']">Address</span>
+      </label>
+      <input type="text" required :class="['input', 'input-bordered', form.address.hasError ? 'input-error' : '']" v-model="form.address.data" />
+      <label class="label">
+        <span :class="['label-text-alt', form.address.hasError ? 'text-error' : '']">{{ form.address.label }}</span>
+      </label>
+    </div>
+
+    <div class="flex items-center justify-between">
+      <button class="btn btn-primary mt-4" @click="submitCreateAccount">Create Account</button>
+      <img src="@/assets/ducksLogo.svg.png" alt="Avatar" class="object-contain h-20 mt-4 mr-1" />
+    </div>
+
+    <p :class="form.general.label.length ? 'mt-4 text-error' : ''">
+      {{ form.general.label }}
+    </p>
   </form>
 </template>
 
 <script setup>
 import { baseUrl } from "/src/main.js";
-import { ref } from "vue";
+import { reactive } from "vue";
 import axios from "axios";
 import bcrypt from "bcryptjs";
 import store from "@/store/index";
 import router from "@/router/index";
 
-const emailAddress = ref("");
-const password = ref("");
-const firstName = ref("");
-const lastName = ref("");
-const cellPhone = ref("");
-const hoursPerMonth = ref("");
-const address = ref("");
+const form = reactive({
+  emailAddress: {
+    data: "",
+    label: "",
+    hasError: false,
+  },
+  password: {
+    data: "",
+    label: "",
+    hasError: false,
+  },
+  firstName: {
+    data: "",
+    label: "",
+    hasError: false,
+  },
+  lastName: {
+    data: "",
+    label: "",
+    hasError: false,
+  },
+  hoursPerMonth: {
+    data: "",
+    label: "",
+    hasError: false,
+  },
+  cellPhone: {
+    data: "",
+    label: "",
+    hasError: false,
+  },
+  address: {
+    data: "",
+    label: "",
+    hasError: false,
+  },
+  general: {
+    data: ":)",
+    label: "",
+    hasError: false,
+  },
+});
+
+function resetform() {
+  for (let field in form) {
+    form[field].label = "";
+    form[field].hasError = false;
+  }
+}
+
+function validateForm() {
+  for (let field in form) {
+    if (String(form[field].data).trim() === "") {
+      form[field].hasError = true;
+      form[field].label = "Please enter a valid input";
+      return true;
+    }
+  }
+}
 
 function submitCreateAccount() {
+  resetform();
+  if (validateForm()) return;
   const passwordInfo = encryptPassword();
   axios
     .post(baseUrl + "createAccount", {
-      emailAddress: emailAddress.value,
-      firstName: firstName.value,
-      lastName: lastName.value,
-      cellPhone: cellPhone.value,
-      hoursPerMonth: hoursPerMonth.value,
-      address: address.value,
+      emailAddress: form.emailAddress.data,
+      firstName: form.firstName.data,
+      lastName: form.lastName.data,
+      cellPhone: form.cellPhone.data,
+      hoursPerMonth: form.hoursPerMonth.data,
+      address: form.address.data,
       passwordInfo,
     })
     .then((response) => {
-      console.log(response);
-      if (response.data.status == "OK") {
-        store.commit("login");
-        router.push("/");
+      if (response.data.error) {
+        form.general.hasError = true;
+        form.general.label = response.data.message;
       } else {
-        console.log("Something went wrong");
+        store.commit("login");
+        router.push("/login");
       }
     })
     .catch((error) => {
@@ -80,68 +214,8 @@ function submitCreateAccount() {
 function encryptPassword() {
   const saltRounds = Math.floor(Math.random() * 10) + 1; // generate a random number of salt rounds between 1 and 10
   const salt = bcrypt.genSaltSync(saltRounds); // generate a salt using the specified number of rounds
-  const hash = bcrypt.hashSync(password.value, salt); // hash the password using the generated salt
+  const hash = bcrypt.hashSync(form.password.data, salt); // hash the password using the generated salt
 
   return { password: hash, salt: salt };
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  background-color: #c1c6c8;
-}
-form {
-  border: 3px solid #f47a38;
-}
-
-input[type="text"],
-input[type="password"] {
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #f47a38;
-  box-sizing: border-box;
-  font-size: 18px;
-}
-
-button {
-  background-color: #b9975b;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-  font-size: 24px;
-}
-
-button:hover {
-  opacity: 0.8;
-}
-
-img.avatar {
-  width: 8%;
-  padding-left: auto;
-  padding-right: auto;
-}
-
-.container {
-  padding: 7px;
-}
-
-span.psw {
-  float: right;
-  padding-top: 16px;
-}
-
-/* Change styles for span and cancel button on extra small screens */
-@media screen and (max-width: 300px) {
-  span.psw {
-    display: block;
-    float: none;
-  }
-}
-</style>
