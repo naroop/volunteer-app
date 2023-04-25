@@ -23,7 +23,7 @@ if (os.environ.get("FLASK_ENVI") == "prod"):
                            pool_timeout=30
                            )
 else:
-    engine = create_engine(os.environ.get("DATABASE_URL") + "loginTest",
+    engine = create_engine(os.environ.get("DATABASE_URL") + "dev",
                            poolclass=QueuePool,
                            pool_size=5,
                            max_overflow=10,
@@ -41,6 +41,7 @@ def getUsers():
     session.close()
     # Return a new list containing each user object in result converted to a dictionary, and then jsonified
     return jsonify([user.asDict() for user in results])
+
 
 @app.get('/getUserDetails/<string:emailAddress>')
 def getUserDetailsByEmail(emailAddress):

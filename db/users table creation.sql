@@ -1,4 +1,4 @@
-USE loginTest;
+USE dev;
 DROP TABLE IF EXISTS UserDetails;
 DROP TABLE IF EXISTS Users;
 CREATE TABLE Users (

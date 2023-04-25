@@ -39,7 +39,7 @@
         <label class="label">
           <span :class="['label-text', form.lastName.hasError ? 'text-error' : '']">Last Name</span>
         </label>
-        <input type="text" required :class="['input', 'input-bordered', form.lastName.hasError ? 'input-error' : '']" v-model="form.lastName.data" />
+        <input type="text" :class="['input', 'input-bordered', form.lastName.hasError ? 'input-error' : '']" v-model="form.lastName.data" />
         <label class="label">
           <span :class="['label-text-alt', form.lastName.hasError ? 'text-error' : '']">{{ form.lastName.label }}</span>
         </label>
