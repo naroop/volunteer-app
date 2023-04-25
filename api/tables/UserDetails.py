@@ -1,19 +1,20 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
+from tables.User import User
 
 Base = declarative_base()
 
 
-class Users(Base):
-    __tablename__ = 'users'
+class UserDetails(Base):
+    __tablename__ = 'UserDetails'
 
     firstName = Column(String(30))
     lastName = Column(String(30))
-    emailAddress = Column(String(30), primary_key=True)
+    emailAddress = Column(String(30), ForeignKey(User.emailAddress), primary_key=True)
     cellPhone = Column(String(10))
     hoursPerMonth = Column(Integer)
     address = Column(String(256))
-    password = Column(String(30))
 
     # Converts the User object to a dictionary
     def asDict(self) -> dict:
@@ -24,6 +25,5 @@ class Users(Base):
             "cellPhone": self.cellPhone,
             "hoursPerMonth": self.hoursPerMonth,
             "address": self.address,
-            "password": self.password
         }
         return userDict

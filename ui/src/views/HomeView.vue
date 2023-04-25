@@ -1,18 +1,17 @@
 <template>
-  <div class="home">
-    <img class="mx-auto" alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld />
+  <div class="flex flex-col h-screen items-center justify-center">
+    <h1 class="text-2xl mb-3">Welcome!</h1>
+    <button class="btn btn-primary" @click.prevent="$router.push('/editAccount')">Edit Account</button>
+    <button class="btn btn-secondary mt-3" @click="logout">Sign Out</button>
   </div>
 </template>
 
-<script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+<script setup>
+import store from "@/store/index";
+import router from "@/router/index";
 
-export default {
-  name: "HomeView",
-  components: {
-    HelloWorld,
-  },
-};
+function logout() {
+  store.commit("logout");
+  router.push("/login");
+}
 </script>
