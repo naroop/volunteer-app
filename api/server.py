@@ -13,7 +13,7 @@ load_dotenv()
 
 app = Flask(__name__)
 
-CORS(app, origins='http://localhost:8080')
+CORS(app)
 
 if (os.environ.get("FLASK_ENVI") == "prod"):
     engine = create_engine(os.environ.get("DATABASE_URL") + "prod",
