@@ -35,36 +35,54 @@ Session = scoped_session(sessionmaker(bind=engine))
 
 @app.get('/getUsers')
 def getUsers():
-    session = Session()
-    # Query the database for all users, results is a list of User objects
-    results = session.query(User).all()
-    session.close()
-    # Return a new list containing each user object in result converted to a dictionary, and then jsonified
-    return jsonify([user.asDict() for user in results])
+    try:
+        session = Session()
+        # Query the database for all users, results is a list of User objects
+        results = session.query(User).all()
+        session.close()
+        # Return a new list containing each user object in result converted to a dictionary, and then jsonified
+        return jsonify([user.asDict() for user in results])
+    except Exception as e:
+        print(type(e), e)
+        session.rollback()
+        session.close()
+        return jsonify({"error": True, "message": "An error occurred."})
 
 
 @app.get('/getUserDetails/<string:emailAddress>')
 def getUserDetailsByEmail(emailAddress):
-    session = Session()
-    result = session.query(UserDetails).filter_by(emailAddress=emailAddress).first()
-    session.close()
-    if result:
-        return jsonify({"error": False, "userDetails": result.asDict()})
-    else:
-        return jsonify({"error": True, "message": "An error occurred trying to find your account."})
+    try:
+        session = Session()
+        result = session.query(UserDetails).filter_by(emailAddress=emailAddress).first()
+        session.close()
+        if result:
+            return jsonify({"error": False, "userDetails": result.asDict()})
+        else:
+            return jsonify({"error": True, "message": "An error occurred trying to find your account."})
+    except Exception as e:
+        print(type(e), e)
+        session.rollback()
+        session.close()
+        return jsonify({"error": True, "message": "An error occurred."})
 
 
 @app.route('/login', methods=['POST'])
 def login():
     if request.method == 'POST':
-        session = Session()
-        data = request.get_json()
-        result = session.query(User).filter_by(emailAddress=data['emailAddress']).first()
-        session.close()
-        if result:
-            return jsonify({"password": result.password, "salt": result.salt})
-        else:
-            return jsonify({"error": True, "message": "No account was found with that email address."})
+        try:
+            session = Session()
+            data = request.get_json()
+            result = session.query(User).filter_by(emailAddress=data['emailAddress']).first()
+            session.close()
+            if result:
+                return jsonify({"password": result.password, "salt": result.salt})
+            else:
+                return jsonify({"error": True, "message": "No account was found with that email address."})
+        except Exception as e:
+            print(type(e), e)
+            session.rollback()
+            session.close()
+            return jsonify({"error": True, "message": "An error occurred."})
 
 
 @app.route('/createAccount', methods=['POST'])
@@ -107,7 +125,7 @@ def edit():
             session.close()
             return jsonify({"error": False})
         except Exception as e:
-            print(e)
+            print(type(e), e)
             session.rollback()
             session.close()
             return jsonify({"error": True, "message": "An error occurred updating your account."})
