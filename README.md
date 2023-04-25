@@ -1,5 +1,8 @@
 # Volunteer App
-If using Windows use WSL. The Node stuff works on Windows but there are some issues with Python/Flask's dependencies and Windows but WSL works great.
+
+> VIEW APP HERE:
+> http://18.218.117.37:8001/
+
 ## Initial Setup
 
 ### Python
@@ -32,18 +35,15 @@ If using Windows use WSL. The Node stuff works on Windows but there are some iss
 > View UI:  
 > http://localhost:8080
 
-> Only one API endpoint right now:  
-> http://localhost:8000/helloworld
+> API
+> http://localhost:8000/<endpoint>
 
 ## Running the Docker Container
-I didn't test if this was actually a problem but I would make sure both dev servers are closed before building the image and running the container.
+**The docker container will only work on the EC2 instance.**
 
-The docker container will only work on the EC2 instance.
+Build: `docker-compose up --build`
+Restart & Rebuild: `docker-compose down --rmi all --remove-orphans && docker-compose up --build`
 
-1. In the root of the project, run `docker-compose up --build`
-
-> View UI:  
-> http://localhost:8001
 
 ## Notes
 - I removed the .env file from the API so if the database doesn't work make sure you have that.
