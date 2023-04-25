@@ -100,6 +100,7 @@ def createAccount():
             session.close()
             return jsonify({"error": False})
         except IntegrityError:
+            print(type(e), e)
             session.rollback()
             session.close()
             return jsonify({"error": True, "message": "An account already exists with the given email address."})
