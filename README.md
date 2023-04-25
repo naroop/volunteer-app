@@ -1,7 +1,6 @@
 # Volunteer App
 
-> VIEW APP HERE:
-> http://18.218.117.37:8001/
+### View App: http://18.218.117.37:8001/
 
 ## Initial Setup
 
