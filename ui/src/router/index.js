@@ -24,6 +24,9 @@ const routes = [
   {
     path: "/editAccount",
     component: EditAccountView,
+    meta: {
+      requiresAuth: true,
+    },
   },
 ];
 

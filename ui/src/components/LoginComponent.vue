@@ -41,8 +41,8 @@ import bcrypt from "bcryptjs";
 import store from "@/store/index";
 import router from "@/router/index";
 
-const email = ref("sgoggins@mail.com");
-const password = ref("securepasswordforprof");
+const email = ref("");
+const password = ref("");
 const btnSubmitLoginLoading = ref(false);
 
 const validation = reactive({
@@ -90,7 +90,7 @@ function submitLoginForm() {
     }
     const hashedPassword = bcrypt.hashSync(password.value, response.data.salt);
     if (hashedPassword == response.data.password) {
-      store.commit("login", validation.emailAddress);
+      store.commit("login", email.value);
       router.push("/");
     } else {
       btnSubmitLoginLoading.value = false;

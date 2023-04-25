@@ -6,12 +6,7 @@
       <label class="label">
         <span :class="['label-text', form.emailAddress.hasError ? 'text-error' : '']">Email Address</span>
       </label>
-      <input
-        type="text"
-        required
-        :class="['input', 'input-bordered', form.emailAddress.hasError ? 'input-error' : '']"
-        v-model="form.emailAddress.data"
-      />
+      <input type="text" :class="['input', 'input-bordered', form.emailAddress.hasError ? 'input-error' : '']" v-model="form.emailAddress.data" />
       <label class="label">
         <span :class="['label-text-alt', form.emailAddress.hasError ? 'text-error' : '']">{{ form.emailAddress.label }}</span>
       </label>
@@ -21,12 +16,7 @@
       <label class="label">
         <span :class="['label-text', form.password.hasError ? 'text-error' : '']">Password</span>
       </label>
-      <input
-        type="password"
-        required
-        :class="['input', 'input-bordered', form.password.hasError ? 'input-error' : '']"
-        v-model="form.password.data"
-      />
+      <input type="password" :class="['input', 'input-bordered', form.password.hasError ? 'input-error' : '']" v-model="form.password.data" />
       <label class="label">
         <span :class="['label-text-alt', form.password.hasError ? 'text-error' : '']">{{ form.password.label }}</span>
       </label>
@@ -39,12 +29,7 @@
         <label class="label">
           <span :class="['label-text', form.firstName.hasError ? 'text-error' : '']">First Name</span>
         </label>
-        <input
-          type="text"
-          required
-          :class="['input', 'input-bordered', form.firstName.hasError ? 'input-error' : '']"
-          v-model="form.firstName.data"
-        />
+        <input type="text" :class="['input', 'input-bordered', form.firstName.hasError ? 'input-error' : '']" v-model="form.firstName.data" />
         <label class="label">
           <span :class="['label-text-alt', form.firstName.hasError ? 'text-error' : '']">{{ form.firstName.label }}</span>
         </label>
@@ -66,12 +51,7 @@
         <label class="label">
           <span :class="['label-text', form.cellPhone.hasError ? 'text-error' : '']">Phone</span>
         </label>
-        <input
-          type="text"
-          required
-          :class="['input', 'input-bordered', form.cellPhone.hasError ? 'input-error' : '']"
-          v-model="form.cellPhone.data"
-        />
+        <input type="text" :class="['input', 'input-bordered', form.cellPhone.hasError ? 'input-error' : '']" v-model="form.cellPhone.data" />
         <label class="label">
           <span :class="['label-text-alt', form.cellPhone.hasError ? 'text-error' : '']">{{ form.cellPhone.label }}</span>
         </label>
@@ -84,7 +64,6 @@
         <input
           type="number"
           :class="['input', 'input-bordered', form.hoursPerMonth.hasError ? 'input-error' : '']"
-          required
           v-model="form.hoursPerMonth.data"
           @input="if (form.hoursPerMonth.data < 0) form.hoursPerMonth.data = 0;"
         />
@@ -98,7 +77,7 @@
       <label class="label">
         <span :class="['label-text', form.address.hasError ? 'text-error' : '']">Address</span>
       </label>
-      <input type="text" required :class="['input', 'input-bordered', form.address.hasError ? 'input-error' : '']" v-model="form.address.data" />
+      <input type="text" :class="['input', 'input-bordered', form.address.hasError ? 'input-error' : '']" v-model="form.address.data" />
       <label class="label">
         <span :class="['label-text-alt', form.address.hasError ? 'text-error' : '']">{{ form.address.label }}</span>
       </label>

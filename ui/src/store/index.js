@@ -16,6 +16,7 @@ export default createStore({
     },
     logout(state) {
       state.isLoggedIn = false;
+      state.emailAddress = "";
     },
   },
   modules: {},
