@@ -45,6 +45,7 @@ The docker container will only work on the EC2 instance.
 > View UI:  
 > http://localhost:8001
 
-## Amazon Database Info
-username: ducksroot
-password: duckspassword
+## Notes
+- I removed the .env file from the API so if the database doesn't work make sure you have that.
+- If things aren't running correctly make sure you try a `pip install -r requirements.txt` in `/api` and `npm install` in `/ui`.
+- If you add a dependency to the API run `pip freeze > requirements.txt` to update the requirements list.
